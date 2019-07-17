@@ -1,0 +1,9 @@
+PROJECT_ROOT_DOMAIN=laravel-admin
+PROJECT_SHORT_NAME=la
+
+MYSQL_ROOT_PASSWORD=root
+MYSQL_DATABASE=laravel-admin
+MYSQL_PORT=3306
+
+WS_ROOT=public
+WS_INDEX=index.php

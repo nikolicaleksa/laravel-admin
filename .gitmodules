@@ -1,0 +1,3 @@
+[submodule "php-docker"]
+	path = php-docker
+	url = git@github.com:nikolicaleksa/php-docker.git

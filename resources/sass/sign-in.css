@@ -1,0 +1,13 @@
+/* Sign in */
+#sign-in-box {
+    margin-top: 50px;
+}
+#sign-in-box .panel-heading {
+    margin: 0px -15px;
+}
+#sign-in-box .checkbox {
+    margin-left: -15px;
+}
+#form-button {
+    margin-top: 20px;
+}

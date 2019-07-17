@@ -1,0 +1,9 @@
+{
+    "/css/admin-app.css": "/css/admin-app.css",
+    "/css/guest-app.css": "/css/guest-app.css",
+    "/js/guest-app.js": "/js/guest-app.js",
+    "/js/admin-app.js": "/js/admin-app.js",
+    "/ckeditor/config.js": "/ckeditor/config.js",
+    "/ckeditor/styles.js": "/ckeditor/styles.js",
+    "/ckeditor/contents.css": "/ckeditor/contents.css"
+}
