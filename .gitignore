@@ -13,3 +13,7 @@ yarn-error.log
 _ide_helper.php
 .phpstorm.meta.php
 .php_cs.cache
+/public/css/*.css
+/public/js/*.js
+/public/ckeditor/*
+v8-compile-cache-0/

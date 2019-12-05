@@ -858,3 +858,11 @@ a:focus {
 #statistics-list a h3 {
     font-size: 22px;
 }
+
+.post-data label {
+    padding-top: 0px !important;
+}
+
+.post-data .form-groupw {
+    margin-bottom: 10px !important;
+}

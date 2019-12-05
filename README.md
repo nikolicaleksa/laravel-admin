@@ -50,6 +50,8 @@ $ php artisan key:generate
 $ php artisan migrate
 $ php artisan admin:install
 $ php artisan db:seed
+$ npm install
+$ npm run dev
 $ exit
 ```
 
