@@ -15,6 +15,7 @@ return [
         'yes' => 'Yes',
         'no' => 'No',
         'confirm-delete' => 'Delete confirmation',
+        'confirm-restore' => 'Restore confirmation',
         'save' => 'Save',
         'close' => 'Close',
     ],

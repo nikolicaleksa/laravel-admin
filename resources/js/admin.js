@@ -191,7 +191,49 @@ $(function () {
         const delete_row = $(this).parent().parent();
 
         new PNotify({
-            title: confirm_title,
+            title: delete_confirm_title,
+            text: confirm_message,
+            icon: 'glyphicon glyphicon-question-sign',
+            hide: false,
+            confirm: {
+                confirm: true,
+                buttons: [{
+                    text: yes,
+                    addClass: "btn-warning",
+                    promptTrigger: true,
+                    click: function (notice, value) {
+                        notice.remove();
+                        ajax_get(redirect_link, function (response) {
+                            if (response.code === 200) {
+                                delete_row.remove();
+                            }
+                        });
+                    }
+                }, {
+                    text: no,
+                    addClass: "",
+                    click: function (notice) {
+                        notice.remove();
+                        notice.get().trigger("pnotify.cancel", notice);
+                    }
+                }]
+            },
+            buttons: {
+                sticker: false
+            }
+        });
+    });
+
+    // Restore confirmation
+    $(".restore").click(function (e) {
+        e.preventDefault();
+
+        const confirm_message = $(this).attr("data-message");
+        const redirect_link = $(this).attr("href");
+        const delete_row = $(this).parent().parent();
+
+        new PNotify({
+            title: restore_confirm_title,
             text: confirm_message,
             icon: 'glyphicon glyphicon-question-sign',
             hide: false,

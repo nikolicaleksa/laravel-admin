@@ -56,7 +56,8 @@
         var danger_title = "@lang('content.titles.danger')";
         var warning_title = "@lang('content.titles.warning')";
         var info_title = "@lang('content.titles.info')";
-        var confirm_title = "@lang('content.buttons.confirm-delete')";
+        var delete_confirm_title = "@lang('content.buttons.confirm-delete')";
+        var restore_confirm_title = "@lang('content.buttons.confirm-restore')";
         var yes = "@lang('content.buttons.yes')";
         var no = "@lang('content.buttons.no')";
     </script>

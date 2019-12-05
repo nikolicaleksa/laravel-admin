@@ -14,7 +14,7 @@ class PostController extends Controller
 {
     private const POSTS_PER_PAGE = 15;
 
-    
+
     /**
      * PostController constructor.
      */
@@ -144,19 +144,25 @@ class PostController extends Controller
     /**
      * Display edit post form.
      *
-     * @param Post $post
+     * @param int $post
      *
      * @return View
      */
-    public function showEditPostForm(Post $post): View
+    public function showEditPostForm($post): View
     {
-        $categories = Category::all();
+        $post = Post::withTrashed()->find($post);
 
-        return view('posts/edit-post', [
-            'post' => $post,
-            'categories' => $categories,
-            'publishOptions' => Post::PUBLISH_OPTIONS,
-        ]);
+        if (null !== $post) {
+            $categories = Category::all();
+
+            return view('posts/edit-post', [
+                'post' => $post,
+                'categories' => $categories,
+                'publishOptions' => Post::PUBLISH_OPTIONS,
+            ]);
+        }
+
+        abort(404);
     }
 
     /**
@@ -186,18 +192,24 @@ class PostController extends Controller
     /**
      * Restore post from trash.
      *
-     * @param Post $post
+     * @param int $post
      *
      * @return JsonResponse
      */
-    public function restorePost(Post $post): JsonResponse
+    public function restorePost($post): JsonResponse
     {
-        $post->restore();
+        $post = Post::onlyTrashed()->find($post);
 
-        return response()->json([
-            'code' => JsonResponse::HTTP_OK,
-            'response' => trans('messages.posts.post-restored')
-        ]);
+        if (null !== $post) {
+            $post->restore();
+
+            return response()->json([
+                'code' => JsonResponse::HTTP_OK,
+                'response' => trans('messages.posts.post-restored')
+            ]);
+        }
+
+        abort(404);
     }
 
     /**
@@ -240,38 +252,44 @@ class PostController extends Controller
     /**
      * Update existing post information.
      *
-     * @param Post $post
+     * @param int $post
      * @param SavePostRequest $request
      *
      * @return JsonResponse
      */
-    public function updatePost(Post $post, SavePostRequest $request): JsonResponse
+    public function updatePost($post, SavePostRequest $request): JsonResponse
     {
-        $publishedAt = $post->published_at;
-        $isPublished = $post->is_published;
-        $publishOption = $request->get('publish_option');
+        $post = Post::withTrashed()->find($post);
 
-        if ($publishOption == Post::PUBLISH_OPTIONS['now'] && (!$post->is_published || $post->isScheduled())) {
-            $publishedAt = Carbon::now();
-        } elseif ($publishOption == Post::PUBLISH_OPTIONS['draft']) {
-            $isPublished = false;
-        } elseif ($publishOption == Post::PUBLISH_OPTIONS['schedule']) {
-            $publishedAt = Carbon::createFromTimeString($request->get('publish_at'));
+        if (null !== $post) {
+            $publishedAt = $post->published_at;
+            $isPublished = $post->is_published;
+            $publishOption = $request->get('publish_option');
+
+            if ($publishOption == Post::PUBLISH_OPTIONS['now'] && (!$post->is_published || $post->isScheduled())) {
+                $publishedAt = Carbon::now();
+            } elseif ($publishOption == Post::PUBLISH_OPTIONS['draft']) {
+                $isPublished = false;
+            } elseif ($publishOption == Post::PUBLISH_OPTIONS['schedule']) {
+                $publishedAt = Carbon::createFromTimeString($request->get('publish_at'));
+            }
+
+            $postData = array_merge($request->except('publish_option, published_at'), [
+                'is_published' => $isPublished,
+                'published_at' => $publishedAt,
+                'user_id' => $request->user()->id,
+                'image' => '',
+            ]);
+
+            $post->update($postData);
+
+            return response()->json([
+                'code' => JsonResponse::HTTP_OK,
+                'response' => trans('messages.posts.post-added'),
+                'redirect' => route('showAllPostsList')
+            ]);
         }
 
-        $postData = array_merge($request->except('publish_option, published_at'), [
-            'is_published' => $isPublished,
-            'published_at' => $publishedAt,
-            'user_id' => $request->user()->id,
-            'image' => '',
-        ]);
-
-        $post->update($postData);
-
-        return response()->json([
-            'code' => JsonResponse::HTTP_OK,
-            'response' => trans('messages.posts.post-added'),
-            'redirect' => route('showAllPostsList')
-        ]);
+        abort(404);
     }
 }

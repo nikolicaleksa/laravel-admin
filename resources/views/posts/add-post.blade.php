@@ -90,7 +90,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                    <div class="col-sm-12">
+                    </div>
+                    <div class="col-sm-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">@lang('content.posts.publish-options')</h3>
