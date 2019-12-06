@@ -46,6 +46,11 @@ return [
         'category-deleted' => 'Category deleted successfully.',
         'delete-category' => 'Are you sure you want to delete category <b>:category</b>?',
     ],
+    'media' => [
+        'no-media' => 'There are no media in the system.',
+        'delete-media' => 'Are you sure you want to delete selected media?',
+        'media-deleted' => 'Medias deleted successfully.',
+    ],
     'users' => [
         'no-users' => 'There are no users in the system.',
         'never-signed-in' => 'Never signed in',

@@ -33,5 +33,13 @@ class AppServiceProvider extends ServiceProvider
 
             return "<?php echo ($key + ($currentPage - 1) * $perPage + 1); ?>";
         });
+
+        Blade::directive('media', function ($expression) {
+            $parameters = explode(', ', $expression);
+            $media = $parameters[0];
+            $size = $parameters[1] ?? 'original';
+
+            return "<?php echo ($media)->getImageUrl($size); ?>";
+        });
     }
 }

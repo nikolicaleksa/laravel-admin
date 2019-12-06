@@ -42,6 +42,23 @@
                             </li>
                         </ul>
                     </li>
+                    <li @if(Request::is('admin/media*') || Request::is('admin/gallery*')) class="active" @endif>
+                        <a>
+                            <i class="fa fa-file-photo-o"></i> @lang('content.navigation.navigation-elements.media-library') <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <ul class="nav child_menu">
+                            <li @if(Request::is('admin/media*')) class="active" @endif>
+                                <a href="{{ route('showMediaList') }}">
+                                    @lang('content.navigation.navigation-elements.media')
+                                </a>
+                            </li>
+                            <li @if(Request::is('admin/gallery*')) class="active" @endif>
+                                <a href="{{ route('showGalleryList') }}">
+                                    @lang('content.navigation.navigation-elements.gallery')
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li @if(Request::is('admin/users*')) class="active" @endif>
                         <a href="{{ route('showUsersList') }}">
                             <i class="fa fa-users"></i> @lang('content.navigation.navigation-elements.users')

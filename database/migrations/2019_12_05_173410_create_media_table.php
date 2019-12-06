@@ -15,8 +15,8 @@ class CreateMediaTable extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 64);
-            $table->string('file', 128);
+            $table->text('name');
+            $table->text('file');
             $table->string('mime_type', 64)->nullable();
             $table->string('dimensions', 16)->nullable();
             $table->unsignedBigInteger('size');

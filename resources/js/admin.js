@@ -224,6 +224,102 @@ $(function () {
         });
     });
 
+    // Delete medias
+    $(".delete-medias").click(function (e) {
+        e.preventDefault();
+
+        const confirm_message = $(this).attr("data-message");
+        const redirect_link = $(this).attr("href");
+
+        new PNotify({
+            title: delete_confirm_title,
+            text: confirm_message,
+            icon: 'glyphicon glyphicon-question-sign',
+            hide: false,
+            confirm: {
+                confirm: true,
+                buttons: [{
+                    text: yes,
+                    addClass: "btn-warning",
+                    promptTrigger: true,
+                    click: function (notice, value) {
+                        notice.remove();
+
+                        var post_data = new Array();
+
+                        $("li[aria-checked=true]").each(function () {
+                            post_data.push($(this).attr("data-id"));
+                        });
+
+                        $.ajax({
+                            /* Basic options*/
+                            type: "POST",
+                            url: redirect_link,
+                            data: {
+                                medias: post_data,
+                            },
+                            dataType: "json",
+
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader('X-CSRF-TOKEN', $('input[name=_token]').val());
+                                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                            },
+
+                            /* If Ajax completes */
+                            success: function (result) {
+                                /* Remove old notifications */
+                                removeNotifications();
+
+                                if (result.code) {
+                                    /* HTTP 200 codes*/
+                                    if (http_200s.indexOf(result.code) > -1) {
+                                        displayNotification(result.response, "success");
+
+                                        $("li[aria-checked=true]").each(function () {
+                                           $(this).remove();
+                                        });
+                                    }
+
+                                    /* HTTP 400 codes */
+                                    else if (http_400s.indexOf(result.code) > -1) {
+                                        displayNotification(result.response, "warning");
+
+                                    }
+
+                                    /* HTTP 500 codes */
+                                    else if (http_500s.indexOf(result.code) > -1) {
+                                        displayNotification(result.response, "danger");
+                                    }
+                                }
+
+                                /* Position notifications */
+                                positionNotifications();
+                            },
+
+                            /* If Ajax failed */
+                            error: function (xhr, textStatus, errorThrown) {
+                                console.log(xhr);
+                                console.log(textStatus);
+                                console.log(errorThrown);
+                            }
+                        });
+                    }
+                }, {
+                    text: no,
+                    addClass: "",
+                    click: function (notice) {
+                        notice.remove();
+                        notice.get().trigger("pnotify.cancel", notice);
+                    }
+                }]
+            },
+            buttons: {
+                sticker: false
+            }
+        });
+    });
+
     // Restore confirmation
     $(".restore").click(function (e) {
         e.preventDefault();
@@ -334,12 +430,39 @@ $(function () {
             'form_id': 'settings-form'
         });
     }
+
+    // Select media
+    if($(".check").length) {
+        $(".check").on("click", function() {
+            let check = $(this).find("span");
+            let parent = $(this).parent();
+
+            if(check.css("display") == "none") {
+                check.css("display", "block");
+                parent.addClass("selected");
+                parent.attr("aria-checked", "true");
+            } else {
+                check.css("display", "none");
+                parent.removeClass("selected");
+                parent.attr("aria-checked", "false");
+            }
+        });
+    }
 });
 
 // NProgress
 $(window).on("load", function (e) {
     NProgress.done();
 });
+
+// Dropzone
+Dropzone.options.addMediaForm = {
+    paramName: 'medias',
+    uploadMultiple: true,
+    maxFilesize: null,
+    createImageThumbnails: true,
+    acceptedFiles: 'image/*'
+};
 
 // Visitor statistics
 function showVisitorsStatistics(url, year, month = null)

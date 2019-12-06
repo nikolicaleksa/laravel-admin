@@ -48,6 +48,15 @@ Route::prefix('/admin')->group(function () {
     Route::post('/categories/add', 'CategoryController@addCategory')->name('addCategory');
     Route::post('/categories/edit/{category}', 'CategoryController@updateCategory')->name('updateCategory');
 
+    // Media
+    Route::get('/media/{page?}', 'MediaController@showMediaList')->name('showMediaList');
+    Route::get('/media/add', 'MediaController@showAddMediaForm')->name('showAddMediaForm');
+    Route::post('/media/add', 'MediaController@addMedia')->name('addMedia');
+    Route::post('/media/delete', 'MediaController@deleteMedia')->name('deleteMedia');
+
+    // Gallery
+    Route::get('/gallery/{page?}', 'GalleryController@showGalleryList')->name('showGalleryList');
+
     // Users
     Route::get('/users/{page?}', 'UserController@showUsersList')->name('showUsersList');
     Route::get('/users/add', 'UserController@showAddUserForm')->name('showAddUserForm');

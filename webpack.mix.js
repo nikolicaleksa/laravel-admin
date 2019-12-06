@@ -41,6 +41,7 @@ mix.sass('resources/sass/authenitcated.scss', 'public/css/admin-app.css')
         'node_modules/highcharts/highcharts.js',
         'node_modules/highcharts/highcharts-more.js',
         'node_modules/highcharts/modules/solid-gauge.js',
+        'node_modules/dropzone/dist/min/dropzone.min.js',
         'resources/js/functions.js',
         'resources/js/admin.js',
     ], 'public/js/admin-app.js')

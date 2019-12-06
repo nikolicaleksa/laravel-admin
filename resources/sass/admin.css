@@ -866,3 +866,106 @@ a:focus {
 .post-data .form-groupw {
     margin-bottom: 10px !important;
 }
+
+.dropzone {
+    border: 2px dashed #0087F7;
+    border-radius: 5px;
+    padding: 50px 20px;
+}
+
+.dz-message {
+    font-size: 16px;
+}
+
+.drop-files {
+    font-size: 20px;
+}
+
+.or {
+    margin: 5px 0;
+}
+
+#media-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+#media-list li {
+    margin-bottom: 15px;
+    padding: 7px;
+}
+
+#media-list .selected {
+    box-shadow: inset 0 0 0 3px #f1f1f1, inset 0 0 0 7px #1e8cbe;
+}
+
+.media-item {
+    position: relative;
+    box-shadow: inset 0 0 15px rgba(0,0,0,.1), inset 0 0 0 1px rgba(0,0,0,.05);
+    background: #eee;
+    cursor: pointer;
+}
+
+.media-item:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+.media-thumbnail {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 1;
+    transition: opacity .1s;
+}
+
+.media-centered {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translate(50%,50%);
+}
+
+.media-centered img {
+    transform: translate(-50%,-50%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-height: 100%;
+}
+
+#media-list li button {
+    height: 17px;
+    width: 17px;
+    padding: 0;
+    padding-right: 1px;
+    border: 0;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    outline: 0;
+    background: #eee;
+    cursor: pointer;
+    box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(0,0,0,.15);
+}
+
+#media-list li button span {
+    font-size: 15px;
+    display: none;
+}
+
+#media-list .selected button {
+    background-color: #0073aa;
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0px #0073aa;
+}
+
+#media-list .selected button span {
+    color: #FFFFFF;
+}
